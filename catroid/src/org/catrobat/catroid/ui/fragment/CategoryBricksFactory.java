@@ -98,6 +98,7 @@ import org.catrobat.catroid.content.bricks.SetYBrick;
 import org.catrobat.catroid.content.bricks.ShowBrick;
 import org.catrobat.catroid.content.bricks.ShowTextBrick;
 import org.catrobat.catroid.content.bricks.SpeakBrick;
+import org.catrobat.catroid.content.bricks.StampBrick;
 import org.catrobat.catroid.content.bricks.StopAllSoundsBrick;
 import org.catrobat.catroid.content.bricks.TurnLeftBrick;
 import org.catrobat.catroid.content.bricks.TurnRightBrick;
@@ -296,6 +297,7 @@ public class CategoryBricksFactory {
 		looksBrickList.add(new ChangeSizeByNBrick(BrickValues.CHANGE_SIZE_BY));
 		looksBrickList.add(new HideBrick());
 		looksBrickList.add(new ShowBrick());
+		looksBrickList.add(new StampBrick());
 		looksBrickList.add(new SetTransparencyBrick(BrickValues.SET_TRANSPARENCY));
 		looksBrickList.add(new ChangeTransparencyByNBrick(BrickValues.CHANGE_GHOST_EFFECT));
 		looksBrickList.add(new SetBrightnessBrick(BrickValues.SET_BRIGHTNESS_TO));
