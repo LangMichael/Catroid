@@ -57,6 +57,7 @@ public class StampAction extends TemporalAction {
 		LookData lookData = background.look.getLookData();
 		Pixmap pixmap1 = lookData.getPixmap();
 
+
 		float xCoord =  sprite.look.getLookData().getPixmap().getWidth() / 2f;// + sprite.look.getWidth()/2f;
 		float yCoord =  sprite.look.getLookData().getPixmap().getHeight() / 2f;// - sprite.look.getHeight();
 		Log.v("Stamp1", "Größe1:"+ sprite.look.getLookData().getPixmap().getWidth());
@@ -81,14 +82,16 @@ public class StampAction extends TemporalAction {
 		Log.v("Stamp2", "scale:" + scale);
 
 		if (scale < 1) {
-			x = (int) (x + sprite.look.getLookData().getPixmap().getWidth()*scale*0.5);
-			y = (int) (y + sprite.look.getLookData().getPixmap().getHeight()*scale*0.5);
+			Log.v("Stamp2", "scaleX:" + (x + sprite.look.getLookData().getPixmap().getWidth()*scale*0.5));
+			Log.v("Stamp2", "scaleY:" + (y + sprite.look.getLookData().getPixmap().getHeight()*scale*0.5));
+			x = (int) (x + sprite.look.getLookData().getPixmap().getWidth()*(1-scale)*0.5);
+			y = (int) (y + sprite.look.getLookData().getPixmap().getHeight()*(1-scale)*0.5);
 		}
 		else if(scale > 1) {
-			scale = scale - 1;
-			x = (int) (x - sprite.look.getLookData().getPixmap().getWidth()*scale*0.5);
-			y = (int) (y - sprite.look.getLookData().getPixmap().getHeight()*scale*0.5);
+			x = (int) (x - sprite.look.getLookData().getPixmap().getWidth()*(scale-1)*0.5);
+			y = (int) (y - sprite.look.getLookData().getPixmap().getHeight()*(scale-1)*0.5);
 		}
+
 
 		Log.v("Stamp2", "newX:" + x);
 		Log.v("Stamp2", "newY:" + y);
@@ -98,22 +101,80 @@ public class StampAction extends TemporalAction {
 		Log.v("Stamp", "TextureRegionWidth: " + sprite.look.getLookData().getTextureRegion().getRegionWidth());
 		Log.v("Stamp", "TextureRegionHeight: " + sprite.look.getLookData().getTextureRegion().getRegionHeight());
 
-		//Float testF = sprite.look.getDirectionInUserInterfaceDimensionUnit() -90;
-		//Log.v("Stamp2", "rotation2:" +testF);
 
-		Pixmap testMap = rotatePixmap(this.sprite.look.getLookData().getPixmap(), sprite.look.getDirectionInUserInterfaceDimensionUnit());
 
+		Pixmap rotateMap = this.sprite.look.getLookData().getPixmap();
+
+		if(sprite.look.getDirectionInUserInterfaceDimensionUnit() != 90) {
+			Log.v("Stamp","Rotation vorgenommen!!");
+
+			rotateMap = rotatePixmap(this.sprite.look.getLookData().getPixmap(),
+					sprite.look.getDirectionInUserInterfaceDimensionUnit());
+
+			double xCorrection = (rotateMap.getWidth() - this.sprite.look.getLookData().getPixmap().getWidth())/2;
+			double yCorrection = (rotateMap.getHeight() - this.sprite.look.getLookData().getPixmap().getHeight())/2;
+
+
+			Log.v("Stamp", "rotateMapWidth: " + rotateMap.getWidth());
+			Log.v("Stamp", "spriteMapWidth: " + this.sprite.look.getLookData().getPixmap().getWidth());
+
+			Log.v("Stamp", "xCorr: " + xCorrection);
+			Log.v("Stamp", "yCorr: " + yCorrection);
+
+			xCorrection = (rotateMap.getWidth() - this.sprite.look.getLookData().getPixmap().getWidth())*scale/2;
+			yCorrection = (rotateMap.getHeight() - this.sprite.look.getLookData().getPixmap().getHeight())
+					*scale/2;
+
+			Log.v("Stamp", "xCorr2: " + xCorrection);
+			Log.v("Stamp", "yCorr2: " + yCorrection);
+
+			//if(rotateMap.getWidth()>this.sprite.look.getLookData().getPixmap().getWidth()) {
+				//Log.v("Stamp", "rotateMap.getWidth()>>>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
+				x -= xCorrection;
+			//}
+			/*
+			else {
+				x += xCorrection;
+				Log.v("Stamp", "ELSE rotateMap.getWidth()>>>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
+			}
+			*/
+
+			//if(rotateMap.getHeight()>this.sprite.look.getLookData().getPixmap().getHeight()) {
+				//Log.v("Stamp", "rotateMap.getWidth()>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
+				y -= yCorrection;
+			//}
+			/*
+			else {
+				Log.v("Stamp", "ELSE rotateMap.getWidth()>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
+				y += yCorrection;
+			}
+			*/
+
+		}
+
+
+		Log.v("Stamp","rotatemapwidth:" + rotateMap.getWidth());
+		Log.v("Stamp","rotatemapHeight:" + rotateMap.getHeight());
+
+		Log.v("Stamp","rotatemapwidth2:" + rotateMap.getWidth()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit()));
+		Log.v("Stamp","rotatemapHeight2:" + rotateMap.getHeight()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit
+				()));
 
 		//pixmap1.drawPixmap(this.sprite.look.getLookData().getPixmap(),
-		pixmap1.drawPixmap(testMap,
+		pixmap1.drawPixmap(rotateMap,
 		0,
 		0,
-		sprite.look.getLookData().getPixmap().getWidth(),
-		sprite.look.getLookData().getPixmap().getHeight(),
+		//sprite.look.getLookData().getPixmap().getWidth(),
+		//sprite.look.getLookData().getPixmap().getHeight(),
+				rotateMap.getWidth(),
+				rotateMap.getHeight(),
 		x,
 		y,
-		sprite.look.getLookData().getPixmap().getWidth()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit()),
-		sprite.look.getLookData().getPixmap().getHeight()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit()));
+		//sprite.look.getLookData().getPixmap().getWidth()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit()),
+		//sprite.look.getLookData().getPixmap().getHeight()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit
+				(int)((float)rotateMap.getWidth()/100*(sprite.look.getSizeInUserInterfaceDimensionUnit())),
+				(int)((float)rotateMap.getHeight()/100*(sprite.look.getSizeInUserInterfaceDimensionUnit
+				())));
 
 		lookData.setPixmap(pixmap1);
 
@@ -132,7 +193,11 @@ public class StampAction extends TemporalAction {
 				0,src.getHeight()
 		});
 
-		Float polyRotation = angle - 90;
+		angle = angle-90;
+
+		Float polyRotation = angle;
+
+		angle = 360 - angle;
 
 		poly.setRotation(polyRotation);
 
@@ -144,12 +209,32 @@ public class StampAction extends TemporalAction {
 		//final int width = ((int)rect.getWidth());
 		//final int height = ((int) rect.getHeight());
 
-		final int width = ((int)rect.getWidth()*2);
-		final int height = ((int) rect.getWidth()*2);
+		final int width = ((int) src.getWidth());
+		final int height = ((int) src.getHeight());
 
-		Pixmap rotated = new Pixmap(width, height, src.getFormat());
+		Log.v("StampFormat","format: " + src.getFormat().toString());
+		Log.v("StampFormat","formatValues:" + src.getFormat().values());
+
+		final int newWidth = (int) rect.getWidth();
+		final int newHeight = (int) rect.getHeight();
+		final int newCenterX = newWidth / 2;
+		final int newCenterY = newHeight / 2;
+
+		Pixmap rotated = new Pixmap(newWidth, newHeight, src.getFormat());
+
+		for(int i = 0; i<rotated.getWidth(); i++) {
+			for(int j = 0; j<rotated.getHeight(); j++) {
+				rotated.drawPixel(i,j,Color.RED);
+			}
+		}
 
 		final double radians = Math.toRadians(angle), cos = Math.cos(radians), sin = Math.sin(radians);
+
+
+		Log.v("Stamp", "NewWidth: " + newWidth);
+		Log.v("Stamp", "NewHeight: " + newHeight);
+		Log.v("Stamp", "NewCenterX: " + newCenterX);
+		Log.v("Stamp", "NewCenterY: " + newCenterY);
 
 
 		for (int x = 0; x < width; x++) {
@@ -158,10 +243,26 @@ public class StampAction extends TemporalAction {
 						centerx = width/2, centery = height / 2,
 						m = x - centerx,
 						n = y - centery,
-						j = ((int) (m * cos + n * sin)) + centerx,
-						k = ((int) (n * cos - m * sin)) + centery;
-				if (j >= 0 && j < width && k >= 0 && k < height){
-					rotated.drawPixel(x, y, src.getPixel(k, j));
+						j = ((int) (m * cos + n * sin)) + newCenterX,
+						k = ((int) (n * cos - (m * sin))) + newCenterY;
+				//Log.v("Stamp", "m: " + m);
+				//Log.v("Stamp", "n: " + n);
+				//rotated.drawPixel(x,y, Color.RED);
+				if (j >= 0 && j < newWidth && k >= 0 && k < newHeight){
+					//rotated.drawPixel(x, y, src.getPixel(k, j));
+					rotated.drawPixel(j, k, src.getPixel(x, y));
+				}
+				else if(j < 0) {
+					Log.v("Stamp", "------------ OUT OF BOUNDS j<0 -----------#x="+x+"##y="+y+"##j"+j);
+				}
+				else if(j > newWidth) {
+					Log.v("Stamp", "------------ OUT OF BOUNDS j > newWidth -----------#x="+x+"##y="+y+"##j"+j);
+				}
+				else if(k < 0) {
+					Log.v("Stamp", "------------ OUT OF BOUNDS k < 0 -----------#x="+x+"##y="+y+"##k"+k);
+				}
+				else if(k > newHeight) {
+					Log.v("Stamp", "------------ OUT OF BOUNDS k > newHeight ------------#x="+x+"##y="+y+"##k"+k);
 				}
 			}
 		}

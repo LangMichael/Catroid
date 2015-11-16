@@ -163,6 +163,12 @@ public class ExtendedActions extends Actions {
 		return action;
 	}
 
+	public static ClearAction clear() {
+		ClearAction action = action(ClearAction.class);
+		//action.setSprite(sprite);
+		return action;
+	}
+
 	public static IfOnEdgeBounceAction ifOnEdgeBounce(Sprite sprite) {
 		IfOnEdgeBounceAction action = action(IfOnEdgeBounceAction.class);
 		action.setSprite(sprite);

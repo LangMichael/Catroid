@@ -24,7 +24,7 @@
 <resources>
 
     <!-- General terms -->
-    <string name="app_name">Pocket Code</string>
+    <string name="app_name">StampBrickTest</string>
     <string name="cancel_button">Cancel</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
@@ -404,6 +404,7 @@
     <string name="brick_set_background">Set background</string>
     <string name="brick_set_size_to">Set size to</string>
     <string name="brick_set_stamp">Set Stamp</string>
+    <string name="brick_clear">Clear</string>
     <string name="brick_change_size_by">Change size by</string>
     <string name="brick_hide">Hide</string>
     <string name="brick_show">Show</string>

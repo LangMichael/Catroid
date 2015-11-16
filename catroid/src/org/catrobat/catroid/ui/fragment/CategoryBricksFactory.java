@@ -42,6 +42,7 @@ import org.catrobat.catroid.content.bricks.ChangeVariableBrick;
 import org.catrobat.catroid.content.bricks.ChangeVolumeByNBrick;
 import org.catrobat.catroid.content.bricks.ChangeXByNBrick;
 import org.catrobat.catroid.content.bricks.ChangeYByNBrick;
+import org.catrobat.catroid.content.bricks.ClearBrick;
 import org.catrobat.catroid.content.bricks.ClearGraphicEffectBrick;
 import org.catrobat.catroid.content.bricks.ComeToFrontBrick;
 import org.catrobat.catroid.content.bricks.DeleteItemOfUserListBrick;
@@ -298,6 +299,7 @@ public class CategoryBricksFactory {
 		looksBrickList.add(new HideBrick());
 		looksBrickList.add(new ShowBrick());
 		looksBrickList.add(new StampBrick());
+		looksBrickList.add(new ClearBrick());
 		looksBrickList.add(new SetTransparencyBrick(BrickValues.SET_TRANSPARENCY));
 		looksBrickList.add(new ChangeTransparencyByNBrick(BrickValues.CHANGE_GHOST_EFFECT));
 		looksBrickList.add(new SetBrightnessBrick(BrickValues.SET_BRIGHTNESS_TO));
