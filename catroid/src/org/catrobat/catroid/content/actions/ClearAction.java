@@ -47,13 +47,20 @@ public class ClearAction extends TemporalAction {
 
 		LookData lookData = background.look.getLookData();
 
+		if(lookData != null) {
 
+			lookData.setPixmap(lookData.getOriginalPixmap());
 
-		lookData.setPixmap(lookData.getOriginalPixmap());
+			lookData.setTextureRegion();
 
-		lookData.setTextureRegion();
-		lookData.resetLookData();
-		background.look.setLookData(lookData);
+			lookData.resetLookData();
+
+			background.look.setLookData(lookData);
+		}
+		else {
+			Log.v("Clear", "lookData is null!");
+		}
+
 
 
 	}
