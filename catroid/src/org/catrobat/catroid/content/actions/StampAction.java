@@ -65,43 +65,27 @@ import java.util.ArrayList;
 public class StampAction extends TemporalAction {
 
 	private Sprite sprite;
+	private int counter = 0;
 
 	@Override
 	protected void update(float delta) {
-		//Log.v("Stamp", "do update");
+		counter++;
 		Project project = ProjectManager.getInstance().getCurrentProject();
 		Sprite background = project.getSpriteList().get(0);
 
 		LookData lookData = background.look.getLookData();
-		Pixmap pixmap1 = lookData.getPixmap();
 
+		Pixmap pm = new Pixmap(0,0, Pixmap.Format.RGBA8888);
 
-		float xCoord =  sprite.look.getLookData().getPixmap().getWidth() / 2f;// + sprite.look.getWidth()/2f;
-		float yCoord =  sprite.look.getLookData().getPixmap().getHeight() / 2f;// - sprite.look.getHeight();
-		//Log.v("Stamp1", "Größe1:"+ sprite.look.getLookData().getPixmap().getWidth());
-		//Log.v("Stamp1", "Größe2:"+ sprite.look.getSizeInUserInterfaceDimensionUnit());
-		//Log.v("Stamp1", "Anzahl Looks:" + sprite.getLookDataList().size());
+		float xCoord =  sprite.look.getLookData().getPixmap().getWidth() / 2f;
+		float yCoord =  sprite.look.getLookData().getPixmap().getHeight() / 2f;
 
-
-
-		int x = pixmap1.getWidth()/2-(int)xCoord + (int)this.sprite.look.getXInUserInterfaceDimensionUnit();
-		int y = pixmap1.getHeight()/2-(int)yCoord - (int)this.sprite.look.getYInUserInterfaceDimensionUnit();
-
-		//pixmap1.drawPixmap(this.sprite.look.getLookData().getPixmap(), x, y);
-
-		//Log.v("Stamp2", "Originalbreite:" + sprite.look.getLookData().getPixmap().getWidth());
-		//Log.v("Stamp2", "Originalhöhe:" + sprite.look.getLookData().getPixmap().getHeight());
-
-	//	Log.v("Stamp2", "x:" + x);
-	//	Log.v("Stamp2", "y:" + y);
+		int x = lookData.getPixmap().getWidth()/2-(int)xCoord + (int)this.sprite.look.getXInUserInterfaceDimensionUnit();
+		int y = lookData.getPixmap().getHeight()/2-(int)yCoord - (int)this.sprite.look.getYInUserInterfaceDimensionUnit();
 
 		double scale = sprite.look.getSizeInUserInterfaceDimensionUnit()/100;
 
-	//	Log.v("Stamp2", "scale:" + scale);
-
 		if (scale < 1) {
-			//Log.v("Stamp2", "scaleX:" + (x + sprite.look.getLookData().getPixmap().getWidth()*scale*0.5));
-			//Log.v("Stamp2", "scaleY:" + (y + sprite.look.getLookData().getPixmap().getHeight()*scale*0.5));
 			x = (int) (x + sprite.look.getLookData().getPixmap().getWidth()*(1-scale)*0.5);
 			y = (int) (y + sprite.look.getLookData().getPixmap().getHeight()*(1-scale)*0.5);
 		}
@@ -110,76 +94,15 @@ public class StampAction extends TemporalAction {
 			y = (int) (y - sprite.look.getLookData().getPixmap().getHeight()*(scale-1)*0.5);
 		}
 
-
-	//	Log.v("Stamp2", "newX:" + x);
-	//	Log.v("Stamp2", "newY:" + y);
-
-		//Log.v("Stamp2", "rotation:" +sprite.look.getDirectionInUserInterfaceDimensionUnit());
-
-		//Log.v("Stamp", "TextureRegionWidth: " + sprite.look.getLookData().getTextureRegion().getRegionWidth());
-		//Log.v("Stamp", "TextureRegionHeight: " + sprite.look.getLookData().getTextureRegion().getRegionHeight());
-
-
-
-		Pixmap stampPixmap = this.sprite.look.getLookData().getPixmap();
-
 		if(sprite.look.getDirectionInUserInterfaceDimensionUnit() != 90) {
-			//Log.v("Stamp","Rotation vorgenommen!!");
-		/*
-			rotateMap = rotatePixmap2(this.sprite.look.getLookData().getPixmap(),
-					sprite.look.getDirectionInUserInterfaceDimensionUnit());
-*/
-
-			double xCorrection = (stampPixmap.getWidth() - this.sprite.look.getLookData().getPixmap().getWidth())/2;
-			double yCorrection = (stampPixmap.getHeight() - this.sprite.look.getLookData().getPixmap().getHeight())/2;
-
-
-			//Log.v("Stamp", "rotateMapWidth: " + rotateMap.getWidth());
-			//Log.v("Stamp", "spriteMapWidth: " + this.sprite.look.getLookData().getPixmap().getWidth());
-
-			//Log.v("Stamp", "xCorr: " + xCorrection);
-			//Log.v("Stamp", "yCorr: " + yCorrection);
-
-			xCorrection = (stampPixmap.getWidth() - this.sprite.look.getLookData().getPixmap().getWidth())*scale/2;
-			yCorrection = (stampPixmap.getHeight() - this.sprite.look.getLookData().getPixmap().getHeight())
-					*scale/2;
-
-			//Log.v("Stamp", "xCorr2: " + xCorrection);
-			//Log.v("Stamp", "yCorr2: " + yCorrection);
-
-			//if(rotateMap.getWidth()>this.sprite.look.getLookData().getPixmap().getWidth()) {
-				//Log.v("Stamp", "rotateMap.getWidth()>>>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
-				x -= xCorrection;
-			//}
-			/*
-			else {
-				x += xCorrection;
-				Log.v("Stamp", "ELSE rotateMap.getWidth()>>>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
-			}
-			*/
-
-			//if(rotateMap.getHeight()>this.sprite.look.getLookData().getPixmap().getHeight()) {
-				//Log.v("Stamp", "rotateMap.getWidth()>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
-				y -= yCorrection;
-			//}
-			/*
-			else {
-				Log.v("Stamp", "ELSE rotateMap.getWidth()>>>>this.sprite.look.getLookData().getPixmap().getWidth()");
-				y += yCorrection;
-			}
-			*/
-			Log.v("Rotation", "x: " + x);
-			Log.v("Rotation", "y: " + y);
-
-			Log.v("Rotation", "Scale:" + scale);
 
 			// Draw rotated matrix
 
 			Polygon poly = new Polygon(new float[]{
 					0,0,
-					stampPixmap.getWidth()*(float)scale,0,
-					stampPixmap.getWidth()*(float)scale, stampPixmap.getHeight()*(float)scale,
-					0,stampPixmap.getHeight()*(float)scale
+					this.sprite.look.getLookData().getPixmap().getWidth()*(float)scale,0,
+					this.sprite.look.getLookData().getPixmap().getWidth()*(float)scale, this.sprite.look.getLookData().getPixmap().getHeight()*(float)scale,
+					0,this.sprite.look.getLookData().getPixmap().getHeight()*(float)scale
 			});
 
 			float angle = sprite.look.getDirectionInUserInterfaceDimensionUnit()-90;
@@ -188,44 +111,24 @@ public class StampAction extends TemporalAction {
 
 			angle = 360 - angle;
 
-			/*
-			PROBLEM:
-			Beim Drehen eines Sprites
-			Punkte/Pixels werden von zu großer Pixmap genommen..
-
-			 */
-			Pixmap pm = new Pixmap(((int)((double)this.sprite.look.getLookData().getPixmap().getWidth()*scale)),
+			pm = new Pixmap(((int)((double)this.sprite.look.getLookData().getPixmap().getWidth()*scale)),
 					((int)((double)this.sprite.look.getLookData().getPixmap().getHeight()*scale)),
 			Pixmap.Format.RGBA8888);
 
 			pm.drawPixmap(this.sprite.look.getLookData().getPixmap(), 0,0, (int)this.sprite.look.getLookData()
 					.getPixmap().getWidth(), (int)this.sprite.look.getLookData().getPixmap().getHeight(), 0,0,
 					pm.getWidth(),pm.getHeight());
-/*
-			pm.setColor(Color.GREEN);
-			pm.fillCircle(100, 100, 100);
-			pm.setColor(Color.RED);
-			pm.drawCircle(100, 100, 100);
-			*/
-			Log.v("Rotation", "pmWidth: " + pm.getWidth());
-			Log.v("Rotation", "pmHeight: " + pm.getHeight());
-			//pixmap1.drawPixmap(pm, 500,500);
-
-
 
 			poly.setRotation(polyRotation);
 
 			Rectangle rect = poly.getBoundingRectangle();
-/*
-			final int width = ((int) stampPixmap.getWidth());
-			final int height = ((int) stampPixmap.getHeight());
 
-			final int newWidth = (int) rect.getWidth();
-			final int newHeight = (int) rect.getHeight();
-			final int newCenterX = newWidth / 2;
-			final int newCenterY = newHeight / 2;
+			double xCorrection = (rect.getWidth() - pm.getWidth())/2;
+			double yCorrection = (rect.getHeight() - pm.getHeight())/2;
 
-*/
+			x -= xCorrection;
+			y -= yCorrection;
+
 
 			final int width = ((int) pm.getWidth());
 			final int height = ((int) pm.getHeight());
@@ -235,7 +138,6 @@ public class StampAction extends TemporalAction {
 			final int newCenterX = newWidth / 2;
 			final int newCenterY = newHeight / 2;
 
-			//Pixmap rotated = new Pixmap(newWidth, newHeight, src.getFormat());
 			final double radians = Math.toRadians(angle), cos = Math.cos(radians), sin = Math.sin(radians);
 			int counter = 0;
 
@@ -243,9 +145,6 @@ public class StampAction extends TemporalAction {
 			long p,q;
 
 			int j,k;
-			int drawCounter = 0;
-
-			Log.v("Rotation", "width: " + x);
 
 		for (int w = 0; w < newWidth; w++) {
 			for (int h = 0; h < newHeight; h++) {
@@ -263,180 +162,33 @@ public class StampAction extends TemporalAction {
 
 
 				if (j >= 0 && j < width && k >= 0 && k < height) {
-					drawCounter++;
-					//pixmap1.drawPixel(w+x, h+y, stampPixmap.getPixel(j, k));
-					pixmap1.drawPixel(w+x, h+y, pm.getPixel(j, k));
+					lookData.getPixmap().drawPixel(w+x, h+y, pm.getPixel(j, k));
 				}
 			}
 		}
-			Log.v("Rotation", "DrawCounter: " + drawCounter);
-
-
 
 		}
 		else {
-
-/*
-
-		Log.v("Stamp","rotatemapwidth:" + rotateMap.getWidth());
-		Log.v("Stamp","rotatemapHeight:" + rotateMap.getHeight());
-
-		Log.v("Stamp","rotatemapwidth2:" + rotateMap.getWidth()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit()));
-		Log.v("Stamp","rotatemapHeight2:" + rotateMap.getHeight()/100*(int)(sprite.look.getSizeInUserInterfaceDimensionUnit
-				()));
-				*/
-		/*
-			Log.v("Stamp", "Draw Position1:(x) " + (int) ((float) stampPixmap.getWidth() / 100 * (sprite.look
-					.getSizeInUserInterfaceDimensionUnit())));
-			Log.v("Stamp", "Draw Position1:(y) " + (int) ((float) stampPixmap.getHeight() / 100 * (sprite.look
-					.getSizeInUserInterfaceDimensionUnit
-					())));
-		*/
-			//pixmap1.drawPixmap(this.sprite.look.getLookData().getPixmap(),
-
-			pixmap1.drawPixmap(stampPixmap,
+			lookData.getPixmap().drawPixmap(this.sprite.look.getLookData().getPixmap(),
 					0,
 					0,
-					stampPixmap.getWidth(),
-					stampPixmap.getHeight(),
+					this.sprite.look.getLookData().getPixmap().getWidth(),
+					this.sprite.look.getLookData().getPixmap().getHeight(),
 					x,
 					y,
-					(int) ((float) stampPixmap.getWidth() / 100 * (sprite.look.getSizeInUserInterfaceDimensionUnit())),
-					(int) ((float) stampPixmap.getHeight() / 100 * (sprite.look.getSizeInUserInterfaceDimensionUnit
+					(int) ((float) this.sprite.look.getLookData().getPixmap().getWidth() / 100 * (sprite.look.getSizeInUserInterfaceDimensionUnit())),
+					(int) ((float) this.sprite.look.getLookData().getPixmap().getHeight() / 100 * (sprite.look.getSizeInUserInterfaceDimensionUnit
 							())));
 
 
 		}
 
-		lookData.setPixmap(pixmap1);
+		pm.dispose();
 
-		lookData.setTextureRegion();
+		TextureRegion textureRegion = lookData.getTextureRegion();
+		textureRegion.getTexture().draw(lookData.getPixmap(),0,0);
 
 		background.look.setLookData(lookData);
-
-		// ######################################################
-		// ######################################################
-		// ######################################################
-
-		// Zweiter SpriteBatch? Performance? Oder mehrere Actors.
-		/*
-		SpriteBatch sb = new SpriteBatch();
-
-
-		for(int i = 0; i<2; i++) {
-			Sprite s1 = sprite.clone();
-			s1.removeAllScripts();
-			s1.look.setYInUserInterfaceDimensionUnit(300f);
-			s1.look.setXInUserInterfaceDimensionUnit(300f);
-			Stage stage1 = StageActivity.stageListener.getStage();
-			Log.v("sprite", "new Sprite");
-		}
-		*/
-		//Log.v("Combined","FilePath:" + Gdx.files.absolute(lookData.getAbsolutePath()));
-		//Bitmap b1 = BitmapFactory.decodeFile(Gdx.files.absolute(lookData.getAbsolutePath()));
-
-
-
-
-/*
-		Log.v("Combined","Before Init!");
-		TextureAtlas textureAtlas1 = new TextureAtlas(Gdx.files.absolute(lookData.getAbsolutePath()));
-		Log.v("Combined","Init 1!");
-		com.badlogic.gdx.graphics.g2d.NinePatch ninePatch1 = textureAtlas1.createPatch("background");
-		Log.v("Combined","Init 2!");
-		com.badlogic.gdx.scenes.scene2d.ui.Image i1 = new com.badlogic.gdx.scenes.scene2d.ui.Image(ninePatch1);
-		Log.v("Combined","Init 3!");
-		i1.setSize(lookData.getPixmap().getWidth(), lookData.getPixmap().getHeight());
-		i1.setPosition(0,0);
-		Log.v("Combined","Init 4!");
-
-		*/
-
-		//selber atlas und ninepatch..
-		/*
-		TextureAtlas textureAtlas2 = new TextureAtlas(Gdx.files.absolute(this.sprite.look.getLookData()
-				.getAbsolutePath()));
-		com.badlogic.gdx.graphics.g2d.NinePatch ninePatch2 = textureAtlas1.createPatch("image");
-		com.badlogic.gdx.scenes.scene2d.ui.Image i2 = new com.badlogic.gdx.scenes.scene2d.ui.Image(ninePatch1);
-
-*/
-
-		/*
-
-		############################################
-
-		com.badlogic.gdx.scenes.scene2d.ui.Image i1 = new com.badlogic.gdx.scenes.scene2d.ui.Image(lookData
-				.getTextureRegion().getTexture());
-		Log.v("Combined","Init done 1!");
-		com.badlogic.gdx.scenes.scene2d.ui.Image i2 = new com.badlogic.gdx.scenes.scene2d.ui.Image(this.sprite
-				.look.getLookData().getTextureRegion());
-		//com.badlogic.gdx.scenes.scene2d.ui.Image i3 = new com.badlogic.gdx.scenes.scene2d.ui.Image();
-
-		i2.setSize(this.sprite.look.getLookData().getPixmap().getWidth(), this.sprite.look.getLookData().getPixmap()
-				.getHeight());
-		i2.setPosition(300,300);
-
-		Log.v("Combined","Init done!");
-
-		FrameBuffer buffer = new FrameBuffer(Pixmap.Format.RGBA8888, lookData.getPixmap().getWidth(),
-				lookData.getPixmap().getHeight(),
-				false);
-		//Batch batch = new SpriteBatch();
-		SpriteBatch batch = new SpriteBatch();
-
-		batch.begin();
-		buffer.begin();
-		//batch.enableBlending();
-		//Gdx.gl.glBlendFuncSeparate(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_ONE,
-		//		GL20.GL_ONE_MINUS_SRC_ALPHA);
-		//Gdx.gl.glClearColor(1, 0, 1, 0);
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		Gdx.gl.glViewport(0, 0, buffer.getWidth(), buffer.getHeight());
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-
-
-		Log.v("Combined","Before Draw!");
-		//i1.draw(batch, 1f);
-		//i2.draw(batch, 1f);
-		batch.draw(lookData.getTextureRegion(), 0,0);
-		Log.v("Combined","After Draw!");
-
-
-		buffer.end();
-
-		Log.v("Combined","After End!");
-
-		TextureRegion combinedTexture = new TextureRegion(buffer.getColorBufferTexture());
-		//combinedTexture.flip(false, true);
-
-		Log.v("Combined","Texture Height: " + combinedTexture.getRegionHeight() + " --- Texture Width: " +
-				combinedTexture.getRegionWidth());
-		Log.v("Combined","Combined!!!");
-		//combinedTexture.getTexture().getTextureData().prepare();
-		Pixmap p1 = combinedTexture.getTexture().getTextureData().consumePixmap();
-
-
-		//Pixmap p1 = t1.getTextureData().consumePixmap();
-		Log.v("Combined","Generated Pixmap!!!");
-
-		Log.v("Combined","Width: " + p1.getWidth() + " --- Height: " + p1.getHeight());
-		Log.v("Combined","Format: " + p1.getFormat());
-		Log.v("Combined","Normal Format: " + lookData.getPixmap().getFormat());
-		Log.v("Combined","Background Width: " + lookData.getPixmap().getWidth() + " --- Background Height: " + lookData.getPixmap()
-				.getHeight());
-
-
-		lookData.setPixmap(p1);
-
-		Log.v("Combined","After set Pixmap!!!");
-		lookData.setTextureRegion();
-		batch.end();
-		Log.v("Combined","After setTextureRegion!!!");
-		background.look.setLookData(lookData);
-		Log.v("Combined","After Finished!!!");
-		*/
 	}
 
 	public Pixmap rotatePixmap (Pixmap src, float angle){
