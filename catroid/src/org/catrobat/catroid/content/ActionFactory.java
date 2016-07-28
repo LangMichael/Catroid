@@ -77,6 +77,8 @@ import org.catrobat.catroid.content.actions.LegoNxtMotorTurnAngleAction;
 import org.catrobat.catroid.content.actions.LegoNxtPlayToneAction;
 import org.catrobat.catroid.content.actions.MoveNStepsAction;
 import org.catrobat.catroid.content.actions.NextLookAction;
+import org.catrobat.catroid.content.actions.PenDownAction;
+import org.catrobat.catroid.content.actions.PenUpAction;
 import org.catrobat.catroid.content.actions.PhiroMotorMoveBackwardAction;
 import org.catrobat.catroid.content.actions.PhiroMotorMoveForwardAction;
 import org.catrobat.catroid.content.actions.PhiroMotorStopAction;
@@ -95,6 +97,8 @@ import org.catrobat.catroid.content.actions.ReplaceItemInUserListAction;
 import org.catrobat.catroid.content.actions.SetBrightnessAction;
 import org.catrobat.catroid.content.actions.SetColorAction;
 import org.catrobat.catroid.content.actions.SetLookAction;
+import org.catrobat.catroid.content.actions.SetPenColorAction;
+import org.catrobat.catroid.content.actions.SetPenSizeAction;
 import org.catrobat.catroid.content.actions.SetSizeToAction;
 import org.catrobat.catroid.content.actions.SetTextAction;
 import org.catrobat.catroid.content.actions.SetTransparencyAction;
@@ -362,6 +366,18 @@ public class ActionFactory extends Actions {
 		return action;
 	}
 
+	public Action createPenDownAction(Sprite sprite) {
+		PenDownAction action = Actions.action(PenDownAction.class);
+		action.setSprite(sprite);
+		return action;
+	}
+
+	public Action createPenUpAction(Sprite sprite) {
+		PenUpAction action = Actions.action(PenUpAction.class);
+		action.setSprite(sprite);
+		return action;
+	}
+
 	public Action createNextLookAction(Sprite sprite) {
 		NextLookAction action = Actions.action(NextLookAction.class);
 		action.setSprite(sprite);
@@ -442,6 +458,22 @@ public class ActionFactory extends Actions {
 		SetYAction action = Actions.action(SetYAction.class);
 		action.setSprite(sprite);
 		action.setY(y);
+		return action;
+	}
+
+	public Action createSetPenSizeAction(Sprite sprite, Formula penSize) {
+		SetPenSizeAction action = Actions.action(SetPenSizeAction.class);
+		action.setSprite(sprite);
+		action.setPenSize(penSize);
+		return action;
+	}
+
+	public Action createSetPenColorAction(Sprite sprite, Formula red, Formula green, Formula blue) {
+		SetPenColorAction action = Actions.action(SetPenColorAction.class);
+		action.setSprite(sprite);
+		action.setRed(red);
+		action.setGreen(green);
+		action.setBlue(blue);
 		return action;
 	}
 

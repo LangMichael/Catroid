@@ -23,62 +23,72 @@
 
 package org.catrobat.catroid.stage;
 
-import com.badlogic.gdx.graphics.Color;
+import android.graphics.PointF;
+
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import org.catrobat.catroid.ProjectManager;
-import org.catrobat.catroid.common.LookData;
 import org.catrobat.catroid.content.Sprite;
+import org.catrobat.catroid.content.XmlHeader;
 
 public class PenActor extends Actor {
-	private int previousPosX;
-	private int previousPosY;
-	private Color color = Color.BLACK;
-	private Sprite sprite;
 	private boolean initialize = true;
-	private int strokeWidth = 4;
+	private FrameBuffer buffer;
 
-	public PenActor(Sprite sprite) {
-		this.sprite = sprite;
-		setZIndex(ProjectManager.getInstance().getCurrentProject().getSpriteList().size());
+	public PenActor() {
+		XmlHeader header = ProjectManager.getInstance().getCurrentProject().getXmlHeader();
+		buffer = new FrameBuffer(Pixmap.Format.RGBA8888, header.virtualScreenWidth, header.virtualScreenHeight, false);
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+		buffer.begin();
+		for (Sprite sprite : ProjectManager.getInstance().getCurrentProject().getSpriteList()) {
+			drawLinesForSprite(sprite);
+		}
+		buffer.end();
+
+		batch.end();
+		TextureRegion region = new TextureRegion(buffer.getColorBufferTexture());
+		region.flip(false, true);
+		Image image = new Image(region);
+		image.setX(- buffer.getWidth() / 2);
+		image.setY(- buffer.getHeight() / 2);
+		batch.begin();
+		image.draw(batch, parentAlpha);
+	}
+
+	private void drawLinesForSprite(Sprite sprite) {
+		float x = sprite.look.getXInUserInterfaceDimensionUnit();
+		float y = sprite.look.getYInUserInterfaceDimensionUnit();
+
 		if (initialize) {
-			previousPosX = (int) sprite.look.getXInUserInterfaceDimensionUnit();
-			previousPosY = (int) sprite.look.getYInUserInterfaceDimensionUnit();
+			sprite.previousPoint = new PointF(x, y);
 			initialize = false;
 			return;
 		}
 
-		if (previousPosX != (int) sprite.look.getXInUserInterfaceDimensionUnit() || previousPosY != (int) sprite.look
-				.getYInUserInterfaceDimensionUnit()) {
-			Pixmap background = ProjectManager.getInstance().getCurrentProject().getSpriteList().get(0)
-					.look.getLookData().getPixmap();
-			background.setColor(color);
+		if (sprite.previousPoint.x != sprite.look.getX() || sprite.previousPoint.y != sprite.look.getY()) {
+			ShapeRenderer renderer = StageActivity.stageListener.shapeRenderer;
+			renderer.setColor(sprite.penColor);
 
-			int oldX = background.getWidth() / 2 + previousPosX;
-			int oldY = background.getHeight() / 2 - previousPosY;
-			int newX = background.getWidth() / 2 + (int) sprite.look.getXInUserInterfaceDimensionUnit();
-			int newY = background.getHeight() / 2 - (int) sprite.look.getYInUserInterfaceDimensionUnit();
+			renderer.begin(ShapeRenderer.ShapeType.Filled);
+			if (sprite.penDown) {
+				renderer.circle(sprite.previousPoint.x, sprite.previousPoint.y, sprite.penSize / 2);
+				renderer.rectLine(sprite.previousPoint.x, sprite.previousPoint.y, x, y, sprite.penSize);
+				renderer.circle(x, y, sprite.penSize / 2);
+			}
+			renderer.end();
 
-			background.drawLine(oldX, oldY, newX, newY);
-			ProjectManager.getInstance().getCurrentProject().getSpriteList().get(0)
-					.look.getLookData().getTextureRegion().getTexture().draw(background, 0, 0);
 
-			previousPosX = (int) sprite.look.getXInUserInterfaceDimensionUnit();
-			previousPosY = (int) sprite.look.getYInUserInterfaceDimensionUnit();
+			sprite.previousPoint.x = x;
+			sprite.previousPoint.y = y;
 		}
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	public void setStrokeWidth(int strokeWidth) {
-		this.strokeWidth = strokeWidth;
 	}
 }

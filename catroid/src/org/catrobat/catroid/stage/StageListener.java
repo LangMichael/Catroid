@@ -34,15 +34,20 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -51,7 +56,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.google.common.collect.Multimap;
 
 import org.catrobat.catroid.ProjectManager;
-import org.catrobat.catroid.R;
 import org.catrobat.catroid.camera.CameraManager;
 import org.catrobat.catroid.common.Constants;
 import org.catrobat.catroid.common.LookData;
@@ -130,6 +134,7 @@ public class StageListener implements ApplicationListener {
 	private BitmapFont font;
 	private Passepartout passepartout;
 	private Viewport viewPort;
+	public ShapeRenderer shapeRenderer;
 
 	private List<Sprite> sprites;
 
@@ -169,6 +174,8 @@ public class StageListener implements ApplicationListener {
 		font.setColor(1f, 0f, 0.05f, 1f);
 		font.getData().setScale(1.2f);
 
+		shapeRenderer = new ShapeRenderer();
+
 		project = ProjectManager.getInstance().getCurrentProject();
 		pathForScreenshot = Utils.buildProjectPath(project.getName()) + "/";
 
@@ -188,14 +195,16 @@ public class StageListener implements ApplicationListener {
 		physicsWorld = project.resetPhysicsWorld();
 
 		sprites = project.getSpriteList();
+		boolean firstSprite = true;
 		for (Sprite sprite : sprites) {
 			sprite.resetSprite();
 			sprite.look.createBrightnessContrastHueShader();
 			stage.addActor(sprite.look);
-			sprite.resume();
-			if (sprite.getName().equals("Vogel")) {
-				stage.addActor(new PenActor(sprite));
+			if (firstSprite) {
+				stage.addActor(new PenActor());
+				firstSprite = false;
 			}
+			sprite.resume();
 		}
 
 		passepartout = new Passepartout(ScreenValues.SCREEN_WIDTH, ScreenValues.SCREEN_HEIGHT, maximizeViewPortWidth,
@@ -367,6 +376,7 @@ public class StageListener implements ApplicationListener {
 		}
 
 		batch.setProjectionMatrix(camera.combined);
+		shapeRenderer.setProjectionMatrix(camera.combined);
 
 		if (firstStart) {
 			ProjectManager.getInstance().getCurrentProject().getDataContainer().resetAllDataObjects();

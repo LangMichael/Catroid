@@ -558,6 +558,10 @@
     <string name="brick_change_color">"Change color "</string>
     <string name="by_label">by</string>
     <string name="to_label">to</string>
+    <string name="brick_pen_down">Pen down</string>
+    <string name="brick_pen_up">Pen up</string>
+    <string name="brick_pen_size">Set pen size to</string>
+    <string name="brick_pen_color">Set pen color to</string>
     <string name="brick_clear_graphic_effect">Clear graphic effects</string>
     <string name="brick_next_look">Next look</string>
     <string name="brick_next_background">Next background</string>

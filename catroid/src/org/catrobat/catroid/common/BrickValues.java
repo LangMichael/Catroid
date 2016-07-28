@@ -61,6 +61,7 @@ public final class BrickValues {
 	public static final Float SET_COLOR_TO = 0f;
 	public static final Float CHANGE_COLOR_BY = 25f;
 	public static final Float VIBRATE_SECONDS = 1f;
+	public static final Float PEN_SIZE = 4f;
 
 	//constants Sounds
 	public static final Float SET_VOLUME_TO = 60f;

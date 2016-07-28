@@ -22,8 +22,10 @@
  */
 package org.catrobat.catroid.content;
 
+import android.graphics.PointF;
 import android.util.Log;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -37,6 +39,7 @@ import org.catrobat.catroid.common.LookData;
 import org.catrobat.catroid.common.NfcTagData;
 import org.catrobat.catroid.common.SoundInfo;
 import org.catrobat.catroid.content.bricks.Brick;
+import org.catrobat.catroid.content.bricks.PenDownBrick;
 import org.catrobat.catroid.content.bricks.PlaySoundBrick;
 import org.catrobat.catroid.content.bricks.UserBrick;
 import org.catrobat.catroid.content.bricks.UserScriptDefinitionBrick;
@@ -58,6 +61,10 @@ public class Sprite implements Serializable, Cloneable {
 	public transient Look look = new Look(this);
 	public transient boolean isPaused;
 	public transient boolean isBackpackObject = false;
+	public transient boolean penDown = false;
+	public transient float penSize = 4;
+	public transient Color penColor = Color.BLACK;
+	public transient PointF previousPoint = new PointF();
 	@XStreamAsAttribute
 	private String name;
 	private List<Script> scriptList = new ArrayList<>();
@@ -300,6 +307,15 @@ public class Sprite implements Serializable, Cloneable {
 		ProjectManager.getInstance().setCurrentSprite(originalSprite);
 
 		return cloneSprite;
+	}
+
+	public boolean hasPenBrick() {
+		for (Brick brick : getAllBricks()) {
+			if (brick.getClass().toString().equals(PenDownBrick.class.toString())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void setUserAndVariableBrickReferences(Sprite cloneSprite, List<UserBrick> originalPrototypeUserBricks) {
