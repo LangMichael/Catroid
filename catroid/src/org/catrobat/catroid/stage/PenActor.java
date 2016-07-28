@@ -23,27 +23,19 @@
 
 package org.catrobat.catroid.stage;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.Log;
-
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import org.catrobat.catroid.ProjectManager;
+import org.catrobat.catroid.common.LookData;
 import org.catrobat.catroid.content.Sprite;
 
-import java.io.ByteArrayOutputStream;
-
 public class PenActor extends Actor {
-	private float previousPosX;
-	private float previousPosY;
-	private int color = Color.BLACK;
+	private int previousPosX;
+	private int previousPosY;
+	private Color color = Color.BLACK;
 	private Sprite sprite;
 	private boolean initialize = true;
 	private int strokeWidth = 4;
@@ -56,47 +48,33 @@ public class PenActor extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (initialize) {
-			previousPosX = sprite.look.getX();
-			previousPosY = sprite.look.getY();
+			previousPosX = (int) sprite.look.getXInUserInterfaceDimensionUnit();
+			previousPosY = (int) sprite.look.getYInUserInterfaceDimensionUnit();
 			initialize = false;
 			return;
 		}
 
-		if (previousPosX != sprite.look.getX() || previousPosY != sprite.look.getY()) {
-			getImageToDraw().draw(batch, parentAlpha);
-			previousPosX = sprite.look.getX();
-			previousPosY = sprite.look.getY();
+		if (previousPosX != (int) sprite.look.getXInUserInterfaceDimensionUnit() || previousPosY != (int) sprite.look
+				.getYInUserInterfaceDimensionUnit()) {
+			Pixmap background = ProjectManager.getInstance().getCurrentProject().getSpriteList().get(0)
+					.look.getLookData().getPixmap();
+			background.setColor(color);
+
+			int oldX = background.getWidth() / 2 + previousPosX;
+			int oldY = background.getHeight() / 2 - previousPosY;
+			int newX = background.getWidth() / 2 + (int) sprite.look.getXInUserInterfaceDimensionUnit();
+			int newY = background.getHeight() / 2 - (int) sprite.look.getYInUserInterfaceDimensionUnit();
+
+			background.drawLine(oldX, oldY, newX, newY);
+			ProjectManager.getInstance().getCurrentProject().getSpriteList().get(0)
+					.look.getLookData().getTextureRegion().getTexture().draw(background, 0, 0);
+
+			previousPosX = (int) sprite.look.getXInUserInterfaceDimensionUnit();
+			previousPosY = (int) sprite.look.getYInUserInterfaceDimensionUnit();
 		}
 	}
 
-	private Image getImageToDraw() {
-		int width = Math.abs((int) (previousPosX - sprite.look.getX()));
-		int height = Math.abs((int) (previousPosY - sprite.look.getY()));
-		if (width == 0) {
-			width = strokeWidth;
-		}
-		if (height == 0) {
-			height = strokeWidth;
-		}
-
-		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(bitmap);
-		Paint paint = new Paint();
-		paint.setStrokeWidth(strokeWidth);
-		paint.setStyle(Paint.Style.FILL_AND_STROKE);
-		paint.setColor(color);
-		canvas.drawLine(0, 0, width, height, paint);
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-		byte[] bytes = stream.toByteArray();
-
-		Image image = new Image(new Texture(new Pixmap(bytes, 0, bytes.length)));
-		image.setX(previousPosX);
-		image.setY(previousPosY);
-		return image;
-	}
-
-	public void setColor(int color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 
