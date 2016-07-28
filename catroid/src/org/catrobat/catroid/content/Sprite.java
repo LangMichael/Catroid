@@ -64,7 +64,7 @@ public class Sprite implements Serializable, Cloneable {
 	public transient boolean penDown = false;
 	public transient float penSize = 4;
 	public transient Color penColor = Color.BLACK;
-	public transient PointF previousPoint = new PointF();
+	public transient PointF previousPoint = new PointF(0, 0);
 	@XStreamAsAttribute
 	private String name;
 	private List<Script> scriptList = new ArrayList<>();
