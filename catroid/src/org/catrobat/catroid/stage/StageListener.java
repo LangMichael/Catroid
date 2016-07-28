@@ -51,6 +51,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.google.common.collect.Multimap;
 
 import org.catrobat.catroid.ProjectManager;
+import org.catrobat.catroid.R;
 import org.catrobat.catroid.camera.CameraManager;
 import org.catrobat.catroid.common.Constants;
 import org.catrobat.catroid.common.LookData;
@@ -192,6 +193,9 @@ public class StageListener implements ApplicationListener {
 			sprite.look.createBrightnessContrastHueShader();
 			stage.addActor(sprite.look);
 			sprite.resume();
+			if (sprite.getName().equals("Vogel")) {
+				stage.addActor(new PenActor(sprite));
+			}
 		}
 
 		passepartout = new Passepartout(ScreenValues.SCREEN_WIDTH, ScreenValues.SCREEN_HEIGHT, maximizeViewPortWidth,
