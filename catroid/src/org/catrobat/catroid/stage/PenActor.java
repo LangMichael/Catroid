@@ -38,7 +38,6 @@ import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.XmlHeader;
 
 public class PenActor extends Actor {
-	private boolean initialize = true;
 	private FrameBuffer buffer;
 
 	public PenActor() {
@@ -50,7 +49,7 @@ public class PenActor extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		buffer.begin();
 		for (Sprite sprite : ProjectManager.getInstance().getCurrentProject().getSpriteList()) {
-			drawLinesForSprite(sprite);
+			drawLinesForSprite(sprite, batch, parentAlpha);
 		}
 		buffer.end();
 
@@ -64,31 +63,39 @@ public class PenActor extends Actor {
 		image.draw(batch, parentAlpha);
 	}
 
-	private void drawLinesForSprite(Sprite sprite) {
+	public void reset() {
+		XmlHeader header = ProjectManager.getInstance().getCurrentProject().getXmlHeader();
+		buffer = new FrameBuffer(Pixmap.Format.RGBA8888, header.virtualScreenWidth, header.virtualScreenHeight, false);
+	}
+
+	private void drawLinesForSprite(Sprite sprite, Batch batch, float parentAlpha) {
 		float x = sprite.look.getXInUserInterfaceDimensionUnit();
 		float y = sprite.look.getYInUserInterfaceDimensionUnit();
+		Sprite.PenConfiguration pen = sprite.penConfiguration;
 
-		if (initialize) {
-			sprite.previousPoint = new PointF(x, y);
-			initialize = false;
+		if (!pen.initialized) {
+			pen.previousPoint = new PointF(x, y);
+			pen.initialized = true;
 			return;
 		}
 
-		if (sprite.previousPoint.x != sprite.look.getX() || sprite.previousPoint.y != sprite.look.getY()) {
-			ShapeRenderer renderer = StageActivity.stageListener.shapeRenderer;
-			renderer.setColor(sprite.penColor);
+		ShapeRenderer renderer = StageActivity.stageListener.shapeRenderer;
+		renderer.setColor(pen.penColor);
+		renderer.begin(ShapeRenderer.ShapeType.Filled);
 
-			renderer.begin(ShapeRenderer.ShapeType.Filled);
-			if (sprite.penDown) {
-				renderer.circle(sprite.previousPoint.x, sprite.previousPoint.y, sprite.penSize / 2);
-				renderer.rectLine(sprite.previousPoint.x, sprite.previousPoint.y, x, y, sprite.penSize);
-				renderer.circle(x, y, sprite.penSize / 2);
-			}
-			renderer.end();
-
-
-			sprite.previousPoint.x = x;
-			sprite.previousPoint.y = y;
+		if (pen.penDown && (pen.previousPoint.x != sprite.look.getX() || pen.previousPoint.y != sprite.look.getY())) {
+			renderer.circle(pen.previousPoint.x, pen.previousPoint.y, pen.penSize / 2);
+			renderer.rectLine(pen.previousPoint.x, pen.previousPoint.y, x, y, pen.penSize);
+			renderer.circle(x, y, pen.penSize / 2);
 		}
+
+		if (pen.stamp) {
+			sprite.look.draw(batch, parentAlpha);
+			pen.stamp = false;
+		}
+
+		renderer.end();
+		pen.previousPoint.x = x;
+		pen.previousPoint.y = y;
 	}
 }

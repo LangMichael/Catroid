@@ -40,7 +40,7 @@ public class SetPenSizeAction extends TemporalAction {
 	protected void update(float delta) {
 		try {
 			Float newSize = penSize == null ? Float.valueOf(0f) : penSize.interpretFloat(sprite);
-			sprite.penSize = newSize;
+			sprite.penConfiguration.penSize = newSize;
 		} catch (InterpretationException interpretationException) {
 			Log.d(getClass().getSimpleName(), "Formula interpretation for this specific Brick failed.", interpretationException);
 		}

@@ -46,6 +46,7 @@ import org.catrobat.catroid.content.bricks.ChangeVolumeByNBrick;
 import org.catrobat.catroid.content.bricks.ChangeXByNBrick;
 import org.catrobat.catroid.content.bricks.ChangeYByNBrick;
 import org.catrobat.catroid.content.bricks.ChooseCameraBrick;
+import org.catrobat.catroid.content.bricks.ClearBackgroundBrick;
 import org.catrobat.catroid.content.bricks.ClearGraphicEffectBrick;
 import org.catrobat.catroid.content.bricks.ComeToFrontBrick;
 import org.catrobat.catroid.content.bricks.DeleteItemOfUserListBrick;
@@ -112,6 +113,7 @@ import org.catrobat.catroid.content.bricks.SetYBrick;
 import org.catrobat.catroid.content.bricks.ShowBrick;
 import org.catrobat.catroid.content.bricks.ShowTextBrick;
 import org.catrobat.catroid.content.bricks.SpeakBrick;
+import org.catrobat.catroid.content.bricks.StampBrick;
 import org.catrobat.catroid.content.bricks.StopAllSoundsBrick;
 import org.catrobat.catroid.content.bricks.TurnLeftBrick;
 import org.catrobat.catroid.content.bricks.TurnRightBrick;
@@ -160,6 +162,8 @@ public class CategoryBricksFactory {
 			tempList = setupSoundCategoryList(context);
 		} else if (category.equals(context.getString(R.string.category_looks))) {
 			tempList = setupLooksCategoryList(context);
+		} else if (category.equals(context.getString(R.string.category_pen))) {
+			tempList = setupPenCategoryList(context);
 		} else if (category.equals(context.getString(R.string.category_user_bricks))) {
 			tempList = setupUserBricksCategoryList();
 		} else if (category.equals(context.getString(R.string.category_data))) {
@@ -344,10 +348,6 @@ public class CategoryBricksFactory {
 		looksBrickList.add(new ChangeTransparencyByNBrick(BrickValues.CHANGE_TRANSPARENCY_EFFECT));
 		looksBrickList.add(new SetBrightnessBrick(BrickValues.SET_BRIGHTNESS_TO));
 		looksBrickList.add(new ChangeBrightnessByNBrick(BrickValues.CHANGE_BRITHNESS_BY));
-		looksBrickList.add(new PenDownBrick());
-		looksBrickList.add(new PenUpBrick());
-		looksBrickList.add(new SetPenSizeBrick(4));
-		looksBrickList.add(new SetPenColorBrick(255, 255, 255));
 		looksBrickList.add(new SetColorBrick(BrickValues.SET_COLOR_TO));
 		looksBrickList.add(new ChangeColorByNBrick(BrickValues.CHANGE_COLOR_BY));
 		looksBrickList.add(new ClearGraphicEffectBrick());
@@ -358,6 +358,18 @@ public class CategoryBricksFactory {
 		}
 
 		return looksBrickList;
+	}
+
+	private List<Brick> setupPenCategoryList(Context context) {
+		List<Brick> penBrickList = new ArrayList<>();
+
+		penBrickList.add(new PenDownBrick());
+		penBrickList.add(new PenUpBrick());
+		penBrickList.add(new SetPenSizeBrick(4));
+		penBrickList.add(new SetPenColorBrick(255, 255, 255));
+		penBrickList.add(new StampBrick());
+		penBrickList.add(new ClearBackgroundBrick());
+		return penBrickList;
 	}
 
 	private List<Brick> setupDataCategoryList() {

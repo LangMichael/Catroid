@@ -32,7 +32,7 @@ public class PenUpAction extends TemporalAction {
 
 	@Override
 	protected void update(float delta) {
-		this.sprite.penDown = false;
+		this.sprite.penConfiguration.penDown = false;
 	}
 
 	public void setSprite(Sprite sprite) {

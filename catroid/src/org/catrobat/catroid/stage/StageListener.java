@@ -135,6 +135,7 @@ public class StageListener implements ApplicationListener {
 	private Passepartout passepartout;
 	private Viewport viewPort;
 	public ShapeRenderer shapeRenderer;
+	private PenActor penActor;
 
 	private List<Sprite> sprites;
 
@@ -201,7 +202,8 @@ public class StageListener implements ApplicationListener {
 			sprite.look.createBrightnessContrastHueShader();
 			stage.addActor(sprite.look);
 			if (firstSprite) {
-				stage.addActor(new PenActor());
+				penActor = new PenActor();
+				stage.addActor(penActor);
 				firstSprite = false;
 			}
 			sprite.resume();
@@ -357,11 +359,18 @@ public class StageListener implements ApplicationListener {
 
 			Sprite sprite;
 
+			boolean addPenActor = true;
+
 			for (int i = 0; i < spriteSize; i++) {
 				sprite = sprites.get(i);
 				sprite.resetSprite();
 				sprite.look.createBrightnessContrastHueShader();
 				stage.addActor(sprite.look);
+				if (addPenActor) {
+					penActor = new PenActor();
+					stage.addActor(penActor);
+					addPenActor = false;
+				}
 				sprite.pause();
 			}
 			stage.addActor(passepartout);
@@ -669,6 +678,10 @@ public class StageListener implements ApplicationListener {
 		if (checkIfAutomaticScreenshotShouldBeTaken) {
 			makeAutomaticScreenshot = project.manualScreenshotExists(SCREENSHOT_MANUAL_FILE_NAME);
 		}
+	}
+
+	public void clearBackground() {
+		penActor.reset();
 	}
 
 	private void initScreenMode() {

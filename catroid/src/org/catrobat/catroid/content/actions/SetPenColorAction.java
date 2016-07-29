@@ -47,7 +47,7 @@ public class SetPenColorAction extends TemporalAction {
 			int newBlue = blue == null ? 0 : blue.interpretInteger(sprite);
 			Color color = new Color();
 			Color.argb8888ToColor(color, android.graphics.Color.argb(0xFF, newRed, newGreen, newBlue));
-			sprite.penColor = color;
+			sprite.penConfiguration.penColor = color;
 		} catch (InterpretationException interpretationException) {
 			Log.d(getClass().getSimpleName(), "Formula interpretation for this specific Brick failed.", interpretationException);
 		}

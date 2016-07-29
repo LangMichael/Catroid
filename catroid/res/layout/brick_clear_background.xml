@@ -30,14 +30,14 @@
               android:orientation="horizontal" >
 
     <CheckBox
-        android:id="@+id/brick_pen_up_checkbox"
+        android:id="@+id/brick_clear_background_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:visibility="gone" />
 
     <org.catrobat.catroid.ui.BrickLayout
-        android:id="@+id/brick_pen_up_layout"
+        android:id="@+id/brick_clear_background_layout"
         style="@style/BrickContainer.Pen.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,9 +46,9 @@
         app:verticalSpacing="@dimen/brick_flow_layout_vertical_spacing" >
 
         <TextView
-            android:id="@+id/brick_pen_up_text_view"
+            android:id="@+id/brick_clear_background_text_view"
             style="@style/BrickText.SingleLine"
-            android:text="@string/brick_pen_up" />
+            android:text="@string/brick_clear_background" />
     </org.catrobat.catroid.ui.BrickLayout >
 
 </LinearLayout>

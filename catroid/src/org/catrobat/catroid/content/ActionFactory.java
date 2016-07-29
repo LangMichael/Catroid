@@ -47,6 +47,7 @@ import org.catrobat.catroid.content.actions.ChangeVolumeByNAction;
 import org.catrobat.catroid.content.actions.ChangeXByNAction;
 import org.catrobat.catroid.content.actions.ChangeYByNAction;
 import org.catrobat.catroid.content.actions.ChooseCameraAction;
+import org.catrobat.catroid.content.actions.ClearBackgroundAction;
 import org.catrobat.catroid.content.actions.ClearGraphicEffectAction;
 import org.catrobat.catroid.content.actions.ComeToFrontAction;
 import org.catrobat.catroid.content.actions.DeleteItemOfUserListAction;
@@ -109,6 +110,7 @@ import org.catrobat.catroid.content.actions.SetYAction;
 import org.catrobat.catroid.content.actions.ShowAction;
 import org.catrobat.catroid.content.actions.ShowTextAction;
 import org.catrobat.catroid.content.actions.SpeakAction;
+import org.catrobat.catroid.content.actions.StampAction;
 import org.catrobat.catroid.content.actions.StopAllSoundsAction;
 import org.catrobat.catroid.content.actions.TurnLeftAction;
 import org.catrobat.catroid.content.actions.TurnRightAction;
@@ -374,6 +376,17 @@ public class ActionFactory extends Actions {
 
 	public Action createPenUpAction(Sprite sprite) {
 		PenUpAction action = Actions.action(PenUpAction.class);
+		action.setSprite(sprite);
+		return action;
+	}
+
+	public Action createClearBackgroundAction() {
+		ClearBackgroundAction action = Actions.action(ClearBackgroundAction.class);
+		return action;
+	}
+
+	public Action createStampAction(Sprite sprite) {
+		StampAction action = Actions.action(StampAction.class);
 		action.setSprite(sprite);
 		return action;
 	}

@@ -147,18 +147,12 @@ public class CatroidFieldKeySorter implements FieldKeySorter {
 				fieldKeyOrder[9] = fieldKey;
 			} else if (fieldKey.getFieldName().equals("nfcTagList")) {
 				fieldKeyOrder[10] = fieldKey;
-			} else if (fieldKey.getFieldName().equals("penDown")) {
+			} else if (fieldKey.getFieldName().equals("penConfiguration")) {
 				fieldKeyOrder[11] = fieldKey;
-			} else if (fieldKey.getFieldName().equals("penSize")) {
-				fieldKeyOrder[12] = fieldKey;
-			} else if (fieldKey.getFieldName().equals("penColor")) {
-				fieldKeyOrder[13] = fieldKey;
-			} else if (fieldKey.getFieldName().equals("previousPoint")) {
-				fieldKeyOrder[14] = fieldKey;
 			} else if (fieldKey.getFieldName().equals("actionFactory")) {
-				fieldKeyOrder[15] = fieldKey;
+				fieldKeyOrder[12] = fieldKey;
 			} else if (fieldKey.getFieldName().equals("$change")) {
-				fieldKeyOrder[16] = fieldKey;
+				fieldKeyOrder[13] = fieldKey;
 			}
 		}
 		for (FieldKey fieldKey : fieldKeyOrder) {

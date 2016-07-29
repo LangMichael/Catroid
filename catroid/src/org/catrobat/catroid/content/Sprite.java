@@ -61,10 +61,7 @@ public class Sprite implements Serializable, Cloneable {
 	public transient Look look = new Look(this);
 	public transient boolean isPaused;
 	public transient boolean isBackpackObject = false;
-	public transient boolean penDown = false;
-	public transient float penSize = 4;
-	public transient Color penColor = Color.BLACK;
-	public transient PointF previousPoint = new PointF(0, 0);
+	public transient PenConfiguration penConfiguration = new PenConfiguration();
 	@XStreamAsAttribute
 	private String name;
 	private List<Script> scriptList = new ArrayList<>();
@@ -170,6 +167,7 @@ public class Sprite implements Serializable, Cloneable {
 		for (LookData lookData : lookList) {
 			lookData.resetLookData();
 		}
+		penConfiguration = new PenConfiguration();
 	}
 
 	public void removeUserBrick(UserBrick brickToRemove) {
@@ -679,5 +677,14 @@ public class Sprite implements Serializable, Cloneable {
 				}
 			}
 		}
+	}
+
+	public class PenConfiguration {
+		public boolean penDown = false;
+		public float penSize = 4;
+		public Color penColor = Color.BLACK;
+		public PointF previousPoint = new PointF(0, 0);
+		public boolean initialized = false;
+		public boolean stamp = false;
 	}
 }
