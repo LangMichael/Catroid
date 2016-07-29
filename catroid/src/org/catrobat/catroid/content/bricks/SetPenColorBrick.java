@@ -100,13 +100,13 @@ public class SetPenColorBrick extends FormulaBrick {
 		prototypeView = View.inflate(context, R.layout.brick_set_pen_color, null);
 
 		TextView textValueRed = (TextView) prototypeView.findViewById(R.id.brick_set_pen_color_red_prototype_text_view);
-		textValueRed.setText(String.valueOf(BrickValues.PHIRO_VALUE_RED));
+		textValueRed.setText(String.valueOf(BrickValues.PEN_COLOR.r));
 
 		TextView textValueGreen = (TextView) prototypeView.findViewById(R.id.brick_set_pen_color_green_prototype_text_view);
-		textValueGreen.setText(String.valueOf(BrickValues.PHIRO_VALUE_GREEN));
+		textValueGreen.setText(String.valueOf(BrickValues.PEN_COLOR.g));
 
 		TextView textValueBlue = (TextView) prototypeView.findViewById(R.id.brick_set_pen_color_blue_prototype_text_view);
-		textValueBlue.setText(String.valueOf(BrickValues.PHIRO_VALUE_BLUE));
+		textValueBlue.setText(String.valueOf(BrickValues.PEN_COLOR.b));
 
 		return prototypeView;
 	}

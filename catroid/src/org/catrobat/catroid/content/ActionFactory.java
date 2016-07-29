@@ -380,6 +380,22 @@ public class ActionFactory extends Actions {
 		return action;
 	}
 
+	public Action createSetPenSizeAction(Sprite sprite, Formula penSize) {
+		SetPenSizeAction action = Actions.action(SetPenSizeAction.class);
+		action.setSprite(sprite);
+		action.setPenSize(penSize);
+		return action;
+	}
+
+	public Action createSetPenColorAction(Sprite sprite, Formula red, Formula green, Formula blue) {
+		SetPenColorAction action = Actions.action(SetPenColorAction.class);
+		action.setSprite(sprite);
+		action.setRed(red);
+		action.setGreen(green);
+		action.setBlue(blue);
+		return action;
+	}
+
 	public Action createClearBackgroundAction() {
 		ClearBackgroundAction action = Actions.action(ClearBackgroundAction.class);
 		return action;
@@ -471,22 +487,6 @@ public class ActionFactory extends Actions {
 		SetYAction action = Actions.action(SetYAction.class);
 		action.setSprite(sprite);
 		action.setY(y);
-		return action;
-	}
-
-	public Action createSetPenSizeAction(Sprite sprite, Formula penSize) {
-		SetPenSizeAction action = Actions.action(SetPenSizeAction.class);
-		action.setSprite(sprite);
-		action.setPenSize(penSize);
-		return action;
-	}
-
-	public Action createSetPenColorAction(Sprite sprite, Formula red, Formula green, Formula blue) {
-		SetPenColorAction action = Actions.action(SetPenColorAction.class);
-		action.setSprite(sprite);
-		action.setRed(red);
-		action.setGreen(green);
-		action.setBlue(blue);
 		return action;
 	}
 

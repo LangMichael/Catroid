@@ -32,6 +32,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 import org.catrobat.catroid.ProjectManager;
+import org.catrobat.catroid.common.BrickValues;
 import org.catrobat.catroid.common.BroadcastSequenceMap;
 import org.catrobat.catroid.common.Constants;
 import org.catrobat.catroid.common.FileChecksumContainer;
@@ -305,15 +306,6 @@ public class Sprite implements Serializable, Cloneable {
 		ProjectManager.getInstance().setCurrentSprite(originalSprite);
 
 		return cloneSprite;
-	}
-
-	public boolean hasPenBrick() {
-		for (Brick brick : getAllBricks()) {
-			if (brick.getClass().toString().equals(PenDownBrick.class.toString())) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public void setUserAndVariableBrickReferences(Sprite cloneSprite, List<UserBrick> originalPrototypeUserBricks) {
@@ -681,10 +673,9 @@ public class Sprite implements Serializable, Cloneable {
 
 	public class PenConfiguration {
 		public boolean penDown = false;
-		public float penSize = 4;
-		public Color penColor = Color.BLACK;
-		public PointF previousPoint = new PointF(0, 0);
-		public boolean initialized = false;
+		public float penSize = BrickValues.PEN_SIZE;
+		public Color penColor = BrickValues.PEN_COLOR;
+		public PointF previousPoint = null;
 		public boolean stamp = false;
 	}
 }
