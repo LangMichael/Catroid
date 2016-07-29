@@ -22,38 +22,23 @@
  */
 package org.catrobat.catroid.uitest.content.brick;
 
-import android.widget.ListView;
-
 import com.badlogic.gdx.graphics.Color;
 import com.robotium.solo.Condition;
 
 import org.catrobat.catroid.ProjectManager;
-import org.catrobat.catroid.R;
 import org.catrobat.catroid.content.Project;
 import org.catrobat.catroid.content.Script;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.StartScript;
-import org.catrobat.catroid.content.actions.PenUpAction;
-import org.catrobat.catroid.content.actions.SetPenColorAction;
-import org.catrobat.catroid.content.actions.SetPenSizeAction;
-import org.catrobat.catroid.content.actions.StampAction;
-import org.catrobat.catroid.content.bricks.Brick;
-import org.catrobat.catroid.content.bricks.ChangeXByNBrick;
-import org.catrobat.catroid.content.bricks.ClearBackgroundBrick;
 import org.catrobat.catroid.content.bricks.PenDownBrick;
 import org.catrobat.catroid.content.bricks.PenUpBrick;
 import org.catrobat.catroid.content.bricks.SetPenColorBrick;
 import org.catrobat.catroid.content.bricks.SetPenSizeBrick;
-import org.catrobat.catroid.content.bricks.StampBrick;
 import org.catrobat.catroid.content.bricks.WaitBrick;
 import org.catrobat.catroid.stage.StageActivity;
 import org.catrobat.catroid.ui.MainMenuActivity;
-import org.catrobat.catroid.ui.ScriptActivity;
-import org.catrobat.catroid.ui.adapter.BrickAdapter;
 import org.catrobat.catroid.uitest.util.BaseActivityInstrumentationTestCase;
 import org.catrobat.catroid.uitest.util.UiTestUtils;
-
-import java.util.ArrayList;
 
 public class PenBricksTest extends BaseActivityInstrumentationTestCase<MainMenuActivity> {
 	private static final int NEW_PEN_SIZE = 17;
@@ -96,8 +81,6 @@ public class PenBricksTest extends BaseActivityInstrumentationTestCase<MainMenuA
 		assertEquals("Wrong red value", color.r, sprite.penConfiguration.penColor.r);
 		assertEquals("Wrong blue value", color.g, sprite.penConfiguration.penColor.g);
 		assertEquals("Wrong green value", color.b, sprite.penConfiguration.penColor.b);
-
-
 	}
 
 	private void createProject() {

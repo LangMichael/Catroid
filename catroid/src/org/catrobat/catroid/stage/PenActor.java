@@ -24,7 +24,6 @@
 package org.catrobat.catroid.stage;
 
 import android.graphics.PointF;
-import android.util.Log;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -58,7 +57,7 @@ public class PenActor extends Actor {
 		TextureRegion region = new TextureRegion(buffer.getColorBufferTexture());
 		region.flip(false, true);
 		Image image = new Image(region);
-		image.setPosition(- buffer.getWidth() / 2, - buffer.getHeight() / 2);
+		image.setPosition(-buffer.getWidth() / 2, -buffer.getHeight() / 2);
 		batch.begin();
 		image.draw(batch, parentAlpha);
 	}

@@ -163,7 +163,7 @@ public class CategoryBricksFactory {
 		} else if (category.equals(context.getString(R.string.category_looks))) {
 			tempList = setupLooksCategoryList(context);
 		} else if (category.equals(context.getString(R.string.category_pen))) {
-			tempList = setupPenCategoryList(context);
+			tempList = setupPenCategoryList();
 		} else if (category.equals(context.getString(R.string.category_user_bricks))) {
 			tempList = setupUserBricksCategoryList();
 		} else if (category.equals(context.getString(R.string.category_data))) {
@@ -360,7 +360,7 @@ public class CategoryBricksFactory {
 		return looksBrickList;
 	}
 
-	private List<Brick> setupPenCategoryList(Context context) {
+	private List<Brick> setupPenCategoryList() {
 		List<Brick> penBrickList = new ArrayList<>();
 
 		penBrickList.add(new PenDownBrick());
