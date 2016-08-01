@@ -49,7 +49,7 @@ public class PenActor extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		buffer.begin();
 		for (Sprite sprite : ProjectManager.getInstance().getCurrentProject().getSpriteList()) {
-			drawLinesForSprite(sprite, batch, parentAlpha);
+			drawLinesAndStampsForSprite(sprite, batch, parentAlpha);
 		}
 		buffer.end();
 
@@ -64,10 +64,11 @@ public class PenActor extends Actor {
 
 	public void reset() {
 		XmlHeader header = ProjectManager.getInstance().getCurrentProject().getXmlHeader();
+		buffer.dispose();
 		buffer = new FrameBuffer(Pixmap.Format.RGBA8888, header.virtualScreenWidth, header.virtualScreenHeight, false);
 	}
 
-	private void drawLinesForSprite(Sprite sprite, Batch batch, float parentAlpha) {
+	private void drawLinesAndStampsForSprite(Sprite sprite, Batch batch, float parentAlpha) {
 		float x = sprite.look.getXInUserInterfaceDimensionUnit();
 		float y = sprite.look.getYInUserInterfaceDimensionUnit();
 		Sprite.PenConfiguration pen = sprite.penConfiguration;
