@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DefaultDialog"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+
+    <org.catrobat.catroid.ui.BrickLayout
+        android:id="@+id/formula_editor_color_collision"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:horizontalSpacing="@dimen/brick_flow_layout_horizontal_spacing"
+        app:verticalSpacing="@dimen/brick_flow_layout_vertical_spacing">
+
+        <org.catrobat.catroid.ui.CapitalizedTextView
+            android:id="@+id/string_name"
+            style="@style/DefaultDialog.TextView"
+            android:text="@string/formula_editor_function_color_collision" >
+        </org.catrobat.catroid.ui.CapitalizedTextView>
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_red_text_view"
+            style="@style/BrickText"
+            app:layout_newLine="true"
+            android:text="@string/phiro_rgb_led_red"
+            android:paddingLeft="12px"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_red_prototype_text_view"
+            style="@style/BrickPrototypeTextView" />
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_action_red_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_green_text_view"
+            style="@style/BrickText"
+            android:text="@string/phiro_rgb_led_green" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_green_prototype_text_view"
+            style="@style/BrickPrototypeTextView" />
+        <TextView
+            android:id="@+id/formula_editor_color_collision_action_green_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_blue_text_view"
+            style="@style/BrickText"
+            android:text="@string/phiro_rgb_led_blue" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_blue_prototype_text_view"
+            style="@style/BrickPrototypeTextView" />
+
+        <TextView
+            android:id="@+id/formula_editor_color_collision_action_blue_edit_text"
+            style="@style/BrickEditText"
+            app:layout_inputType="number"
+            app:layout_textField="true" >
+        </TextView>
+
+    </org.catrobat.catroid.ui.BrickLayout >
+
+</LinearLayout>

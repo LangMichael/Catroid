@@ -22,6 +22,8 @@
  */
 package org.catrobat.catroid.formulaeditor;
 
+import android.util.Log;
+
 import org.catrobat.catroid.CatroidApplication;
 import org.catrobat.catroid.R;
 
@@ -75,6 +77,23 @@ public class InternToken {
 			} else if (secondSprite.equals(oldName)) {
 				tokenStringValue = firstSprite + " " + collisionTag + " " + newName;
 			}
+		}
+	}
+
+	public void updateColorCollisionFormula(String oldName, String newName) {
+		if (internTokenType == InternTokenType.COLOR_COLLISION_FORMULA && tokenStringValue.contains(oldName)) {
+			String collisionTag = CatroidApplication.getAppContext().getString(R.string
+					.formula_editor_function_color_collision);
+			//String firstSprite = tokenStringValue.substring(0, tokenStringValue.indexOf(collisionTag) - 1);
+			//String secondSprite = tokenStringValue.substring(tokenStringValue.indexOf(collisionTag) + collisionTag.length() + 1, tokenStringValue.length());
+			/*
+			if (firstSprite.equals(oldName)) {
+				tokenStringValue = newName + " " + collisionTag + " " + secondSprite;
+			} else if (secondSprite.equals(oldName)) {
+				tokenStringValue = firstSprite + " " + collisionTag + " " + newName;
+			}
+			*/
+			Log.v("ColorCollision", "CollisionTag: " + collisionTag);
 		}
 	}
 

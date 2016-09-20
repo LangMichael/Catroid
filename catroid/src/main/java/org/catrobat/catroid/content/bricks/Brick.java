@@ -85,6 +85,7 @@ public interface Brick extends Serializable, Cloneable {
 	int VIDEO = 0x20000;
 	int SENSOR_GPS = 0x40000;
 	int COLLISION = 0x80000;
+	int COLOR_COLLISION = 0x160000;
 
 	//	public static final int BLUETOOTH_ARDUINO = 0x20000;
 

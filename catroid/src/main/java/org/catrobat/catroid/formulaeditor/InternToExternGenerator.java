@@ -289,6 +289,8 @@ public class InternToExternGenerator {
 				return "\'" + internToken.getTokenStringValue() + "\'";
 			case COLLISION_FORMULA:
 				return internToken.getTokenStringValue();
+			case COLOR_COLLISION_FORMULA:
+				return internToken.getTokenStringValue();
 
 			default:
 				return getExternStringForInternTokenValue(internToken.getTokenStringValue(), context);

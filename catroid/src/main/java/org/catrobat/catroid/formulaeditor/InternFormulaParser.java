@@ -249,6 +249,8 @@ public class InternFormulaParser {
 			case COLLISION_FORMULA:
 				currentElement.replaceElement(collision());
 				break;
+			case  COLOR_COLLISION_FORMULA:
+				currentElement.replaceElement(colorCollision());
 
 			default:
 				throw new InternFormulaParserException("Parse Error");
@@ -268,6 +270,15 @@ public class InternFormulaParser {
 		}
 
 		FormulaElement lookTree = new FormulaElement(FormulaElement.ElementType.USER_VARIABLE,
+				currentToken.getTokenStringValue(), null);
+
+		getNextToken();
+		return lookTree;
+	}
+
+	private FormulaElement colorCollision() throws  InternFormulaParserException {
+		Log.v("ColorCollision", "##### colorCollision #####");
+		FormulaElement lookTree = new FormulaElement(FormulaElement.ElementType.COLOR_COLLISION_FORMULA,
 				currentToken.getTokenStringValue(), null);
 
 		getNextToken();

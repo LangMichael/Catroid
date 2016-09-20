@@ -154,6 +154,14 @@ public class InternFormula {
 		generateExternFormulaStringAndInternExternMapping(context);
 	}
 
+	public void updateColorCollisionFormula(String oldName, String newName, Context context) {
+		Log.v("ColorCollision", "##### updateColorCollisionFormula #####");
+		for (InternToken internToken : internTokenFormulaList) {
+			internToken.updateColorCollisionFormula(oldName, newName);
+		}
+		generateExternFormulaStringAndInternExternMapping(context);
+	}
+
 	public void removeVariableReferences(String name, Context context) {
 		LinkedList<InternToken> toRemove = new LinkedList<InternToken>();
 		for (InternToken internToken : internTokenFormulaList) {

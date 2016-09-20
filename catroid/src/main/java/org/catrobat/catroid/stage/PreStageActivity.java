@@ -235,6 +235,14 @@ public class PreStageActivity extends BaseActivity implements GatherCollisionInf
 			GatherCollisionInformationTask task = new GatherCollisionInformationTask(this);
 			task.execute();
 		}
+		if ((requiredResources & Brick.COLOR_COLLISION) > 0) {
+			Log.v("ColorCollision", "##### Start Task #####");
+			/*
+			GatherCollisionInformationTask task = new GatherCollisionInformationTask(this);
+			task.execute();
+			*/
+		}
+
 
 		if (requiredResourceCounter == Brick.NO_RESOURCES) {
 			startStage();

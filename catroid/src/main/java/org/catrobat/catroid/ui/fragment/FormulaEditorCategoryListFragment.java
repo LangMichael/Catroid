@@ -83,6 +83,7 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 			R.string.formula_editor_object_y, R.string.formula_editor_object_size,
 			R.string.formula_editor_object_rotation, R.string.formula_editor_object_layer,
 			R.string.formula_editor_function_collision,
+			R.string.formula_editor_function_color_collision,
 			R.string.formula_editor_object_x_velocity, R.string.formula_editor_object_y_velocity,
 			R.string.formula_editor_object_angular_velocity };
 
@@ -220,6 +221,8 @@ public class FormulaEditorCategoryListFragment extends ListFragment implements D
 			if (formulaEditor != null) {
 				if (itemsIds[position] == R.string.formula_editor_function_collision) {
 					showChooseSpriteDialog(formulaEditor, position);
+				} else if(itemsIds[position] == R.string.formula_editor_function_color_collision) {
+					Log.v("ColorCollision", "##### Do Something?? #####");
 				} else {
 
 					formulaEditor.addResourceToActiveFormula(itemsIds[position]);

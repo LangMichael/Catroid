@@ -22,6 +22,8 @@
  */
 package org.catrobat.catroid.formulaeditor;
 
+import android.util.Log;
+
 import org.catrobat.catroid.R;
 
 import java.util.LinkedList;
@@ -361,6 +363,13 @@ public class InternFormulaKeyboardAdapter {
 	private List<InternToken> buildUserVariable(String userVariableName) {
 		List<InternToken> returnList = new LinkedList<InternToken>();
 		returnList.add(new InternToken(InternTokenType.USER_VARIABLE, userVariableName));
+		return returnList;
+	}
+
+	private List<InternToken> buildCollideWithColorFormula(String formula) {
+		Log.v("ColorCollision", "##### buildCollideWithColorFormula #####");
+		List<InternToken> returnList = new LinkedList<InternToken>();
+		returnList.add(new InternToken(InternTokenType.COLOR_COLLISION_FORMULA, formula));
 		return returnList;
 	}
 

@@ -24,6 +24,7 @@ package org.catrobat.catroid.formulaeditor;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -106,6 +107,18 @@ public class Formula implements Serializable {
 
 	public boolean containsSpriteInCollision(String name) {
 		return formulaTree.containsSpriteInCollision(name);
+	}
+
+	public void updateColorCollisionFormulas(String oldName, String newName, Context context) {
+		Log.v("ColorCollision", "##### updateColorCollisionFormulas #####");
+		internFormula.updateColorCollisionFormula(oldName, newName, context);
+		formulaTree.updateColorCollisionFormula(oldName, newName);
+		displayText = null;
+	}
+
+	public boolean containsColorInCollision(String color) {
+		Log.v("ColorCollision", "##### containsColorInCollision #####");
+		return formulaTree.containsColorInCollision(color);
 	}
 
 	public Formula(String value) {

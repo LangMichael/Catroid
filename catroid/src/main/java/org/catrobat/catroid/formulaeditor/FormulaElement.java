@@ -45,13 +45,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class FormulaElement implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	public static enum ElementType {
-		OPERATOR, FUNCTION, NUMBER, SENSOR, USER_VARIABLE, USER_LIST, BRACKET, STRING, COLLISION_FORMULA
+		OPERATOR, FUNCTION, NUMBER, SENSOR, USER_VARIABLE, USER_LIST, BRACKET, STRING, COLLISION_FORMULA, COLOR_COLLISION_FORMULA
 	}
 
 	public static final Double NOT_EXISTING_USER_VARIABLE_INTERPRETATION_VALUE = 0d;
@@ -147,6 +148,8 @@ public class FormulaElement implements Serializable {
 			case COLLISION_FORMULA:
 				internTokenList.add(new InternToken(InternTokenType.COLLISION_FORMULA, this.value));
 				break;
+			case COLOR_COLLISION_FORMULA:
+				internTokenList.add(new InternToken(InternTokenType.BRACKET_CLOSE.COLOR_COLLISION_FORMULA, this.value));
 		}
 		return internTokenList;
 	}
@@ -227,6 +230,53 @@ public class FormulaElement implements Serializable {
 		}
 	}
 
+	public boolean containsColorInCollision(String color) {
+		/*
+		boolean contained = false;
+		if (leftChild != null) {
+			contained |= leftChild.containsSpriteInCollision(name);
+		}
+		if (rightChild != null) {
+			contained |= rightChild.containsSpriteInCollision(name);
+		}
+		if (type == ElementType.COLLISION_FORMULA) {
+			String collisionTag = CatroidApplication.getAppContext().getString(R.string
+					.formula_editor_function_collision);
+			String firstSprite = value.substring(0, value.indexOf(collisionTag) - 1);
+			String secondSprite = value.substring(value.indexOf(collisionTag) + collisionTag.length() + 1, value.length());
+			if (firstSprite.equals(name) || secondSprite.equals(name)) {
+				contained = true;
+			}
+		}
+		return contained;
+		*/
+		Log.v("ColorCollision", "##### containsColorInCollision #####");
+		return true;
+	}
+
+	public void updateColorCollisionFormula(String oldName, String newName) {
+		/*
+		if (leftChild != null) {
+			leftChild.updateCollisionFormula(oldName, newName);
+		}
+		if (rightChild != null) {
+			rightChild.updateCollisionFormula(oldName, newName);
+		}
+		if (type == ElementType.COLLISION_FORMULA && value.contains(oldName)) {
+			String collisionTag = CatroidApplication.getAppContext().getString(R.string
+					.formula_editor_function_collision);
+			String firstSprite = value.substring(0, value.indexOf(collisionTag) - 1);
+			String secondSprite = value.substring(value.indexOf(collisionTag) + collisionTag.length() + 1, value.length());
+			if (firstSprite.equals(oldName)) {
+				value = newName + " " + collisionTag + " " + secondSprite;
+			} else if (secondSprite.equals(oldName)) {
+				value = firstSprite + " " + collisionTag + " " + newName;
+			}
+		}
+		*/
+		Log.v("ColorCollision", "##### updateColorCollisionFormula #####");
+	}
+
 	public Object interpretRecursive(Sprite sprite) {
 
 		Object returnValue = 0d;
@@ -265,8 +315,44 @@ public class FormulaElement implements Serializable {
 					returnValue = 0d;
 					Log.e(getClass().getSimpleName(), Log.getStackTraceString(exception));
 				}
+			case COLOR_COLLISION_FORMULA:
+				try {
+					returnValue = interpretCollision(value);
+				}catch (Exception exception) {
+					returnValue = 0d;
+					Log.e(getClass().getSimpleName(), Log.getStackTraceString(exception));
+				}
 		}
 		return normalizeDegeneratedDoubleValues(returnValue);
+	}
+
+	private Object interpretColorCollision(String formula) {
+		/*
+		int start = 0;
+		String collidesWithTag = CatroidApplication.getAppContext().getString(R.string
+				.formula_editor_function_collision);
+		int end = formula.indexOf(collidesWithTag) - 1;
+		String firstSpriteName = formula.substring(start, end);
+
+		start = end + collidesWithTag.length() + 2;
+		end = formula.length();
+		String secondSpriteName = formula.substring(start, end);
+
+		Look firstLook;
+		Look secondLook;
+		try {
+			firstLook = ProjectManager.getInstance().getCurrentScene().getSpriteBySpriteName(firstSpriteName).look;
+			secondLook = ProjectManager.getInstance().getCurrentScene().getSpriteBySpriteName(secondSpriteName).look;
+		} catch (Resources.NotFoundException exception) {
+			return 0d;
+		}
+
+		return CollisionDetection.checkCollisionBetweenLooks(firstLook, secondLook);
+		*/
+
+		Log.v("ColorCollision", "##### InterpretColorCollision #####");
+
+		return new Object();
 	}
 
 	private Object interpretCollision(String formula) {
@@ -1130,6 +1216,11 @@ public class FormulaElement implements Serializable {
 		if (type == ElementType.COLLISION_FORMULA) {
 			resources |= Brick.COLLISION;
 		}
+
+		if (type == ElementType.COLOR_COLLISION_FORMULA) {
+			resources |= Brick.COLOR_COLLISION;
+		}
+
 		return resources;
 	}
 }
